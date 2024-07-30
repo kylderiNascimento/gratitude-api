@@ -14,7 +14,7 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(uuid()) @db.Uuid
+  id            String    @id @default(uuid())
   name          String
   email         String    @unique
   password_hash String
@@ -23,24 +23,30 @@ model User {
   updated_at    DateTime? @updatedAt
 
   happyMoments HappyMoment[] // Relacionamento com HappyMoment
+
+  @@map("users")
 }
 
 model Category {
-  id           Int           @id @default(autoincrement())
+  id           String        @id @default(uuid())
   description  String        @unique
-  color        String        @default("#3ed63e")
+  color        String        @default("#00ff00") // Cor padrão verde
   happyMoments HappyMoment[] // Relacionamento com HappyMoment
+
+  @@map("categories")
 }
 
 model HappyMoment {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(uuid())
   title       String
   description String
-  imageUrl    String
-  categoryId  Int
-  category    Category @relation(fields: [categoryId], references: [id])
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
+  imageUrl    String?
+  category_id String
+  category    Category @relation(fields: [category_id], references: [id])
+  user_id     String
+  user        User     @relation(fields: [user_id], references: [id])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  @@map("happy_moments")
 }
