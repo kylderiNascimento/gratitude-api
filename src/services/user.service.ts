@@ -22,7 +22,7 @@ export class RegisterUseCase {
         const userWithSameEmail = await this.usersRepository.findByEmail(email);
 
         if (userWithSameEmail) {
-            throw new Error('E-mail already exists.')
+            throw new Error('E-mail already exists.');
         }
 
         await this.usersRepository.create({
