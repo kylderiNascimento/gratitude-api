@@ -1,4 +1,5 @@
 import { prisma } from '@/database/prisma-client';
+import { UsersRepository } from '@/repositories/prisma_orm/user.repository';
 import { hash } from 'bcryptjs';
 
 interface RegisterUseCaseRequest {
@@ -24,11 +25,13 @@ export async function registerUseCase({
     throw new Error('E-mail already exists.')
   }
 
-  await prisma.user.create({
-    data: {
-      name,
-      email,
-      password_hash,
-    },
+  const prismaUsersRepository = new UsersRepository()
+
+  await prismaUsersRepository.create({
+    name,
+    email,
+    password_hash,
   })
+
+
 }
