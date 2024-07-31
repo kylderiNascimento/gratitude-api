@@ -8,7 +8,7 @@ export const app = fastify();
 app.register(appRoutes);
 
 // Tratamento de erros
-app.setErrorHandler((error, _, reply) => {
+app.setErrorHandler((error, request, reply) => {
     if (error instanceof ZodError) {
       return reply
         .status(400)
@@ -21,5 +21,5 @@ app.setErrorHandler((error, _, reply) => {
       // send error DataDog
     }
   
-    return reply.status(500).send(error);
+    return reply.status(500).send({ message: 'Internal server error.'});
 })
