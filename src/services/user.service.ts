@@ -7,7 +7,7 @@ interface RegisterUseCaseRequest {
   password: string
 }
 
-export class RegisterUseCase {
+export class RegisterService {
 
     private usersRepository: UsersRepository;
 
@@ -25,11 +25,13 @@ export class RegisterUseCase {
             throw new Error('E-mail already exists.');
         }
 
-        await this.usersRepository.create({
+        const user = await this.usersRepository.create({
             name,
             email,
             password_hash,
         });
+
+        return user;
     }
 
 
