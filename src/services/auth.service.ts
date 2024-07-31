@@ -16,7 +16,7 @@ interface DataServiceResponse {
 export class AuthService {
   constructor(private usersRepository: UsersRepository) {}
 
-  async execute({ email, password, }: DataServiceRequest): Promise<DataServiceResponse> {
+  async login({ email, password, }: DataServiceRequest): Promise<DataServiceResponse> {
     const user = await this.usersRepository.findByEmail(email)
 
     if (!user) {

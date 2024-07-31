@@ -14,7 +14,7 @@ export async function login(request: FastifyRequest, reply: FastifyReply) {
   try {
     const authService = factoryAuthService();
 
-    await authService.execute({ email, password });
+    await authService.login({ email, password });
 
   } catch (err) {
     if (err instanceof AuthInvalidCredentialsError) {

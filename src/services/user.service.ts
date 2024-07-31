@@ -8,7 +8,7 @@ interface RegisterUseCaseRequest {
   password: string
 }
 
-export class RegisterService {
+export class UserService {
 
     private usersRepository: UsersRepository;
 
@@ -16,7 +16,7 @@ export class RegisterService {
         this.usersRepository = usersRepository;
     }
 
-    async execute({ name, email, password }: RegisterUseCaseRequest) {
+    async create({ name, email, password }: RegisterUseCaseRequest) {
         const password_hash = await hash(password, 6);
 
         // Verificando se já existe o user
