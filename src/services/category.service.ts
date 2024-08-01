@@ -10,6 +10,10 @@ export class CategoryService {
 
     constructor(private categoriesRepository: CategoriesRepository) {}
 
+    async getAll() {
+        return await this.categoriesRepository.getAll();
+    }
+
     async create({ description, color }: CreateCategoryRequest) {
 
         const categoryWithSameId = await this.categoriesRepository.findByDescription(description);
@@ -25,6 +29,5 @@ export class CategoryService {
 
         return category;
     }
-
 
 }

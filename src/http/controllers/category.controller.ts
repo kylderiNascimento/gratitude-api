@@ -3,6 +3,21 @@ import { z } from 'zod';
 import { factoryCategoryService } from '@/services/factories/factory-category-service';
 import { CategoryAlreadyExistsError } from '@/services/error/categories/category-already-exists-error';
 
+
+export async function list(request: FastifyRequest, reply: FastifyReply) {
+  try {
+    const categoriesService = factoryCategoryService();
+    
+    const categories = await categoriesService.getAll();
+    
+    return reply.status(200).send(categories);
+    
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    return reply.status(500).send({ message: 'Failed to fetch categories' }); // Retorna erro 500 em caso de falha
+  }
+}
+
 export async function create(request: FastifyRequest, reply: FastifyReply) {
   const createBodySchema = z.object({
     description: z.string(),
@@ -12,9 +27,9 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
   const { description, color } = createBodySchema.parse(request.body);
 
   try {
-    const registerService = factoryCategoryService();
+    const createService = factoryCategoryService();
 
-    await registerService.create({
+    await createService.create({
       description,
       color,
     });
@@ -29,3 +44,4 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
 
   return reply.status(201).send();
 }
+

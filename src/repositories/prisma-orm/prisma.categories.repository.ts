@@ -3,6 +3,11 @@ import { Prisma } from '@prisma/client';
 
 export class PrismaCategoriesRepository {
 
+    async getAll() {
+        const categories = await prisma.category.findMany();
+        return categories;
+    }
+
     async findById(id: string) {
         const category = await prisma.category.findUnique({
           where: {
