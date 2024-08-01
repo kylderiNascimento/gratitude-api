@@ -26,7 +26,7 @@ export class PrismaCategoriesRepository {
       })
 
       return category;
-  }
+    }
 
     async create(data: Prisma.CategoryCreateInput) {
         const category = await prisma.category.create({
@@ -35,4 +35,23 @@ export class PrismaCategoriesRepository {
 
         return category;
     }
+
+    async update(id: string, data: Prisma.CategoryUpdateInput) {
+      const category = await prisma.category.update({
+          where: { id },
+          data,
+      });
+
+      return category;
+    }
+
+    async delete(id: string): Promise<void> {
+      await prisma.category.delete({
+        where: {
+          id,
+        },
+      });
+    }
+
+
 }
